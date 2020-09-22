@@ -1,2 +1,7 @@
+include ':webview'
+include ':home'
+include ':base'
+include ':common'
+include ':network'
 include ':app'
 rootProject.name = "ArchitectureDesign"
