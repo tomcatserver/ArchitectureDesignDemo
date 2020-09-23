@@ -1,16 +1,18 @@
 package com.example.architecturedesign;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashActivity extends AppCompatActivity {
+import com.example.base.BaseActivity;
+import com.example.router.RouteServiceManager;
+
+import static com.example.router.Router.HOME_PAGE_PATH;
+
+public class SplashActivity extends BaseActivity {
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, MainActivity.class));
+    protected void initData(Bundle bundle) {
+        RouteServiceManager.jumpPage(HOME_PAGE_PATH, bundle);
     }
 
     @Override

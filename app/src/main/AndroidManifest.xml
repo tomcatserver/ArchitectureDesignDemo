@@ -3,6 +3,7 @@
     package="com.example.architecturedesign">
 
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_bg"
         android:label="@string/app_name"
