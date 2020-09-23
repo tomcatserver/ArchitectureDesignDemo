@@ -1,4 +1,4 @@
-package com.example.home;
+package com.example.home.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,8 +6,9 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.base.BaseFragment;
+import com.example.home.R;
 
-public class HomeFragment extends BaseFragment {
+public class LookingMedicineFragment extends BaseFragment {
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
 
@@ -21,6 +22,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int layoutRes() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_looking_medicine;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.home;
+package com.example.home.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,8 +6,9 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.base.BaseFragment;
+import com.example.home.R;
 
-public class FindFragment extends BaseFragment {
+public class Page9Fragment extends BaseFragment {
 
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     protected int layoutRes() {
-        return R.layout.fragment_find;
+        return R.layout.fragment_page9;
     }
 
 }

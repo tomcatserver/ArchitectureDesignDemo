@@ -1,4 +1,4 @@
-package com.example.home;
+package com.example.home.fragment;
 
 
 import android.graphics.Color;
@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.base.BaseActivity;
+import com.example.home.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -37,11 +38,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle bundle) {
-        mBaseFragmentArrays.add(new FindFragment());
-        mBaseFragmentArrays.add(new MineFragment());
-        mBaseFragmentArrays.add(new ShopFragment());
         mBaseFragmentArrays.add(new HomeFragment());
         mBaseFragmentArrays.add(new LookingMedicineFragment());
+        mBaseFragmentArrays.add(new FindFragment());
+        mBaseFragmentArrays.add(new ShopFragment());
+        mBaseFragmentArrays.add(new MineFragment());
+
     }
 
     @Override
