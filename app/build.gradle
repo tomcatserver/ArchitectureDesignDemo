@@ -33,6 +33,7 @@ dependencies {
     api project(":common")
     api project(":home")
     api project(":router")
+    api project(":network")
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
