@@ -20,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -44,5 +48,5 @@ dependencies {
     // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
     api 'io.reactivex.rxjava2:rxjava:2.2.12'
 
-
+    api project(":common")
 }

@@ -1,7 +1,13 @@
 package com.example.network;
 
+import com.example.common.views.AppExecutors;
+import com.example.network.inter.IDownFileProgress;
+import com.example.network.inter.IDownFileToDisk;
+import com.example.network.utils.ResponseBodyToDiskUtil;
+
 import io.reactivex.functions.Function;
 import okhttp3.Interceptor;
+import okhttp3.ResponseBody;
 
 public class CommonNetworkApi extends NetworkApi {
     private static volatile CommonNetworkApi sInstance;
@@ -19,6 +25,22 @@ public class CommonNetworkApi extends NetworkApi {
 
     public static <T> T getService(Class<T> service) {
         return getInstance().getRetrofit(service).create(service);
+    }
+
+    @Override
+    protected IDownFileProgress getDownFileProgress() {
+        return mIDownFileProgress;
+    }
+
+    private IDownFileProgress mIDownFileProgress;
+
+    /**
+     * 设置下载进度
+     *
+     * @param progress 下载进度对象。
+     */
+    public <T extends IDownFileProgress> void setDownFileProgress(T progress) {
+        mIDownFileProgress = progress;
     }
 
     protected <T> Function<T, T> getAppErrorHandler() {
@@ -56,7 +78,27 @@ public class CommonNetworkApi extends NetworkApi {
     @Override
     public String getFormal() {
 //        return "http://service-o5ikp40z-1255468759.ap-shanghai.apigateway.myqcloud.com/";
-        return "https://gateway.fangkuaiyi.com";
+//        return "https://gateway.fangkuaiyi.com";
+        return "https://timgsa.baidu.com/";
+//        return "https://eaifjfe.com/";
+    }
+
+    public static void writeResponseBodyToDisk(ResponseBody responseBody, IDownFileToDisk downFileToDisk) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final String path = ResponseBodyToDiskUtil.writeResponseBodyToDisk(responseBody);
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (downFileToDisk != null) {
+                            downFileToDisk.onResult(path);
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

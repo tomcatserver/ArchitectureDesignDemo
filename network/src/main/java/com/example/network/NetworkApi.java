@@ -4,13 +4,16 @@ import android.util.ArrayMap;
 
 import com.example.network.commoninterceptor.CommonRequestInterceptor;
 import com.example.network.commoninterceptor.CommonResponseInterceptor;
+import com.example.network.commoninterceptor.DownInterceptor;
 import com.example.network.environment.EnvironmentActivity;
 import com.example.network.environment.IEnvironment;
 import com.example.network.errorhandler.HttpErrorHandler;
+import com.example.network.inter.IDownFileProgress;
 
 import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -35,6 +38,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class NetworkApi implements IEnvironment {
     private static final int CACHE_SIZE = 100 * 1024 * 1024;
+    private static final int CONNECT_TIME_OUT = 20;
+    private static final int READ_TIME_OUT = 20;
+    private static final int WRITE_TIME_OUT = 20;
 
     private static INetworkRequiredInfo sINetworkRequiredInfo;
     private static Map<String, Retrofit> sRetrofitMap = new ArrayMap<>();
@@ -78,16 +84,26 @@ public abstract class NetworkApi implements IEnvironment {
             builder.cache(new Cache(sINetworkRequiredInfo.getApplicationContext().getCacheDir(), CACHE_SIZE));
             builder.addInterceptor(new CommonRequestInterceptor(sINetworkRequiredInfo));
             builder.addInterceptor(new CommonResponseInterceptor());
+            builder.addInterceptor(new DownInterceptor(getDownFileProgress()));
             if (sINetworkRequiredInfo != null && sINetworkRequiredInfo.isDebug()) {
                 HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(httpLoggingInterceptor);
             }
+            builder.connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS);
+            builder.readTimeout(READ_TIME_OUT, TimeUnit.SECONDS);
+            builder.writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS);
+
+            //允许失败重试
+            builder.retryOnConnectionFailure(true);
+
             mOkHttpClient = builder.build();
-            handleSSLVerifier(mOkHttpClient);
+//            handleSSLVerifier(mOkHttpClient);
         }
         return mOkHttpClient;
     }
+
+    protected abstract IDownFileProgress getDownFileProgress();
 
     /**
      * 忽略本地证书验证
@@ -113,7 +129,8 @@ public abstract class NetworkApi implements IEnvironment {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
-            }}, new SecureRandom());
+            }
+            }, new SecureRandom());
         } catch (Exception e) {
             e.printStackTrace();
         }
