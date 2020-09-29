@@ -1,8 +1,8 @@
 package com.example.network.utils;
 
-import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
+
+import com.example.base.util.YWLogUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +38,7 @@ public class ResponseBodyToDiskUtil {
             }
             //创建一个文件
             File futureStudioIconFile = new File(SD_HOME_DIR + File.separator + "download.jpg");
-            Log.e("tag", "writeResponseBodyToDisk: ---path=" + futureStudioIconFile.getPath());
+            YWLogUtil.e("tag", "writeResponseBodyToDisk: ---path=" + futureStudioIconFile.getPath());
             //初始化输入流
             InputStream inputStream = null;
             //初始化输出流

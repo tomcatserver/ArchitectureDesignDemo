@@ -1,7 +1,6 @@
 package com.example.network;
 
-import com.example.common.views.AppExecutors;
-import com.example.network.inter.IDownFileProgress;
+import com.example.base.util.AppExecutors;
 import com.example.network.inter.IDownFileToDisk;
 import com.example.network.utils.ResponseBodyToDiskUtil;
 
@@ -27,21 +26,6 @@ public class CommonNetworkApi extends NetworkApi {
         return getInstance().getRetrofit(service).create(service);
     }
 
-    @Override
-    protected IDownFileProgress getDownFileProgress() {
-        return mIDownFileProgress;
-    }
-
-    private IDownFileProgress mIDownFileProgress;
-
-    /**
-     * 设置下载进度
-     *
-     * @param progress 下载进度对象。
-     */
-    public <T extends IDownFileProgress> void setDownFileProgress(T progress) {
-        mIDownFileProgress = progress;
-    }
 
     protected <T> Function<T, T> getAppErrorHandler() {
         return new Function<T, T>() {
@@ -78,8 +62,8 @@ public class CommonNetworkApi extends NetworkApi {
     @Override
     public String getFormal() {
 //        return "http://service-o5ikp40z-1255468759.ap-shanghai.apigateway.myqcloud.com/";
-//        return "https://gateway.fangkuaiyi.com";
-        return "https://timgsa.baidu.com/";
+        return "https://gateway.fangkuaiyi.com";
+//        return "https://timgsa.baidu.com/";
 //        return "https://eaifjfe.com/";
     }
 

@@ -1,31 +1,34 @@
 package com.example.network.observer;
 
-import android.text.TextUtils;
-
-import com.example.common.views.AppExecutors;
+import com.example.base.model.MvvmBaseModel;
+import com.example.network.bean.Response;
 import com.example.network.errorhandler.ExceptionHandle;
 import com.example.network.model.IMvvmNetworkObserver;
-import com.example.network.utils.ResponseBodyToDiskUtil;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.ResponseBody;
 
 public class BaseObserver<T> implements Observer<T> {
     private IMvvmNetworkObserver<T> mMvvmNetworkObserver;
+    private MvvmBaseModel mBaseModel;
+    private boolean mNeedCache;
 
-    public BaseObserver(IMvvmNetworkObserver<T> mvvmNetworkObserver) {
+    public BaseObserver(boolean isNeedCache, MvvmBaseModel baseModel, IMvvmNetworkObserver<T> mvvmNetworkObserver) {
+        mNeedCache = isNeedCache;
+        mBaseModel = baseModel;
         mMvvmNetworkObserver = mvvmNetworkObserver;
     }
 
     @Override
     public void onSubscribe(Disposable d) {
-
+        if (mBaseModel != null) {
+            mBaseModel.addDisposable(d);
+        }
     }
 
     @Override
     public void onNext(T t) {
-        mMvvmNetworkObserver.onSuccess(t, false);
+        mMvvmNetworkObserver.onSuccess(t, mNeedCache);
     }
 
     @Override

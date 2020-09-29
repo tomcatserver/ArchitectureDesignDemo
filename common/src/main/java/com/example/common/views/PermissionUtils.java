@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.base.util.YWLogUtil;
+
 public class PermissionUtils {
     public static final int READ_FILE_REQUEST_CODE = 100; //读文件需要申请的权限
     public static final int WRITE_FILE_REQUEST_CODE = 101; //写文件需要申请的权限

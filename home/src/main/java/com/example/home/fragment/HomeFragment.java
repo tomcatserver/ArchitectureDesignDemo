@@ -14,6 +14,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.base.BaseFragment;
+import com.example.base.util.YWLogUtil;
 import com.example.home.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -59,7 +60,7 @@ public class HomeFragment extends BaseFragment {
             public Fragment createFragment(int position) {
                 //FragmentStateAdapter内部自己会管理已实例化的fragment对象。
                 // 所以不需要考虑复用的问题
-                Log.e("tag", "createFragment: ---position=" + position);
+                YWLogUtil.e("tag", "createFragment: ---position=" + position);
                 return mBaseFragmentArrays.get(position);
             }
 
@@ -87,7 +88,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.e("tag", "onTabUnselected: ----tab=" + tab.getCustomView());
+                YWLogUtil.e("tag", "onTabUnselected: ----tab=" + tab.getCustomView());
                 for (int i = 0; i < mTitle.length; i++) {
                     if (tab == mTabLayout.getTabAt(i)) {
                         TabLayout.Tab layoutTabAt = mTabLayout.getTabAt(i);
@@ -111,7 +112,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 //这里可以自定义TabView
-                Log.e("tag", "onConfigureTab: -----position=" + position);
+                YWLogUtil.e("tag", "onConfigureTab: -----position=" + position);
                 TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.tab_view, null);
                 textView.setText(mTitle[position]);
                 textView.setCompoundDrawablesWithIntrinsicBounds(0, mUnSelectTabRes[position], 0, 0);

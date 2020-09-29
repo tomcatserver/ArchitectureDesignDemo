@@ -2,12 +2,12 @@ package com.example.network.environment;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.example.base.util.YWLogUtil;
 import com.example.network.R;
 
 import static com.example.network.environment.EnvironmentActivity.NETWORK_ENVIRONMENT_PREF_KEY;
@@ -27,7 +27,7 @@ public class EnvironmentFragment extends PreferenceFragmentCompat implements Pre
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Log.e("tag", "onPreferenceChange: ----newValue=" + newValue);
+        YWLogUtil.e("tag", "onPreferenceChange: ----newValue=" + newValue);
         if (!mCurrentNetworkEnvironment.equalsIgnoreCase(String.valueOf(newValue))) {
             Toast.makeText(getContext(), "您已经更改了网络环境，再您退出当前页面的时候APP将会重启切换环境！", Toast.LENGTH_SHORT).show();
         }

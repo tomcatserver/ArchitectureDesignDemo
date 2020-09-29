@@ -1,7 +1,6 @@
 package com.example.network.body;
 
-import android.util.Log;
-
+import com.example.base.util.YWLogUtil;
 import com.example.network.event.FileLoadEvent;
 import com.example.network.inter.IDownFileProgress;
 
@@ -47,9 +46,9 @@ public class FileResponseBody extends ResponseBody {
             public long read(Buffer sink, long byteCount) throws IOException {
                 long byteRead = super.read(sink, byteCount);
                 mByteRead += byteRead == -1 ? 0 : byteRead;
-                Log.e("tag", "read: ----byteRead=" + mByteRead + ",sink=" + sink + ",byteCount=" + byteCount);
+                YWLogUtil.e("tag", "read: ----byteRead=" + mByteRead + ",sink=" + sink + ",byteCount=" + byteCount);
                 mFileLoadEvent.setCurrentCount(mByteRead);
-                Log.e("tag", "read: -----contentLength=" + mFileLoadEvent.getTotalCount() + ",CurrentCount=" + mFileLoadEvent.getCurrentCount());
+                YWLogUtil.e("tag", "read: -----contentLength=" + mFileLoadEvent.getTotalCount() + ",CurrentCount=" + mFileLoadEvent.getCurrentCount());
                 if (mProgress != null) {
                     mProgress.progress(mFileLoadEvent);
                 }

@@ -1,6 +1,6 @@
 package com.example.network.commoninterceptor;
 
-import android.util.Log;
+import com.example.base.util.YWLogUtil;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class CommonResponseInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         long requestTime = System.currentTimeMillis();
         Response response = chain.proceed(chain.request());
-        Log.e("tag", "CommonResponseInterceptor------requestTime= " + (System.currentTimeMillis() - requestTime));
+        YWLogUtil.e("tag", "CommonResponseInterceptor------requestTime= " + (System.currentTimeMillis() - requestTime));
         return chain.proceed(chain.request());
     }
 }

@@ -1,5 +1,6 @@
-package com.example.common.views;
+package com.example.base.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -17,7 +18,9 @@ public class YWLogUtil {
      */
     public static void v(String tag, String msg) {
         if (sLogEnabled) {
-            Log.v(tag, msg);
+            if (!TextUtils.isEmpty(msg)) {
+                Log.v(tag, msg);
+            }
         }
     }
 
@@ -29,7 +32,9 @@ public class YWLogUtil {
      */
     public static void i(String tag, String msg) {
         if (sLogEnabled) {
-            Log.i(tag, msg);
+            if (!TextUtils.isEmpty(msg)) {
+                Log.i(tag, msg);
+            }
         }
     }
 
@@ -41,7 +46,9 @@ public class YWLogUtil {
      */
     public static void d(String tag, String msg) {
         if (sLogEnabled) {
-            Log.d(tag, msg);
+            if (!TextUtils.isEmpty(msg)) {
+                Log.d(tag, msg);
+            }
         }
     }
 
@@ -53,7 +60,9 @@ public class YWLogUtil {
      */
     public static void w(String tag, String msg) {
         if (sLogEnabled) {
-            Log.w(tag, msg);
+            if (!TextUtils.isEmpty(msg)) {
+                Log.w(tag, msg);
+            }
         }
     }
 
@@ -65,7 +74,11 @@ public class YWLogUtil {
      */
     public static void e(String tag, String msg) {
         if (sLogEnabled) {
-            Log.e(tag, msg);
+            if (!TextUtils.isEmpty(msg)) {
+                Log.e(tag, msg);
+            }
         }
     }
+
+
 }

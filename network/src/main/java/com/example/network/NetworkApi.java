@@ -47,6 +47,8 @@ public abstract class NetworkApi implements IEnvironment {
     private String mBaseUrl;
     private OkHttpClient mOkHttpClient;
     private static boolean sIsFormal = true;
+    protected IDownFileProgress mIDownFileProgress;
+
 
     public NetworkApi() {
         if (!sIsFormal) {
@@ -84,7 +86,9 @@ public abstract class NetworkApi implements IEnvironment {
             builder.cache(new Cache(sINetworkRequiredInfo.getApplicationContext().getCacheDir(), CACHE_SIZE));
             builder.addInterceptor(new CommonRequestInterceptor(sINetworkRequiredInfo));
             builder.addInterceptor(new CommonResponseInterceptor());
-            builder.addInterceptor(new DownInterceptor(getDownFileProgress()));
+            if (mIDownFileProgress != null) {
+                builder.addInterceptor(new DownInterceptor(getDownFileProgress()));
+            }
             if (sINetworkRequiredInfo != null && sINetworkRequiredInfo.isDebug()) {
                 HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -102,8 +106,6 @@ public abstract class NetworkApi implements IEnvironment {
         }
         return mOkHttpClient;
     }
-
-    protected abstract IDownFileProgress getDownFileProgress();
 
     /**
      * 忽略本地证书验证
@@ -169,6 +171,19 @@ public abstract class NetworkApi implements IEnvironment {
                 return observable;
             }
         };
+    }
+
+    private IDownFileProgress getDownFileProgress() {
+        return mIDownFileProgress;
+    }
+
+    /**
+     * 设置下载进度
+     *
+     * @param progress 下载进度对象。
+     */
+    public <T extends IDownFileProgress> void setDownFileProgress(T progress) {
+        mIDownFileProgress = progress;
     }
 
     protected abstract <T> Function<? super T, ?> getAppErrorHandler();

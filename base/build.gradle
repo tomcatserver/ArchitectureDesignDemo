@@ -20,6 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -28,5 +35,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.12'
+    api 'com.google.code.gson:gson:2.8.6'
+    // ViewModel and LiveData
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // Java8 support for Lifecycles
+    api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
 
 }
