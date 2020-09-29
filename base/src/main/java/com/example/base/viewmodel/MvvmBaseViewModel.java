@@ -18,6 +18,18 @@ public class MvvmBaseViewModel<M extends MvvmBaseModel, D> extends ViewModel imp
     public MvvmBaseViewModel() {
     }
 
+    public void register() {
+        if (mModel != null) {
+            mModel.register(this);
+        }
+    }
+
+    public void unregister() {
+        if (mModel != null) {
+            mModel.unregister(this);
+        }
+    }
+
     @Override
     protected void onCleared() {
         if (mModel != null) {

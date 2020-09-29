@@ -9,7 +9,7 @@ public class HomeChangeViewModel extends MvvmBaseViewModel<HomeChangeModel, Home
 
     public HomeChangeViewModel() {
         mModel = new HomeChangeModel();
-        mModel.register(this);
+        register();
     }
 
     public void requestData() {
@@ -18,6 +18,6 @@ public class HomeChangeViewModel extends MvvmBaseViewModel<HomeChangeModel, Home
     }
 
     public void clearData() {
-        mModel.unRegister(this);
+        unregister();
     }
 }

@@ -47,7 +47,7 @@ public abstract class MvvmBaseModel<Res> {
         }
     }
 
-    public void unRegister(IBaseModelListener listener) {
+    public void unregister(IBaseModelListener listener) {
         if (listener == null) {
             return;
         }

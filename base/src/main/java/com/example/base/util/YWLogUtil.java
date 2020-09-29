@@ -8,7 +8,7 @@ import android.util.Log;
  */
 public class YWLogUtil {
     /* 可以用于 release 时，统一关闭 Log */
-    public static boolean sLogEnabled = true;
+    public static boolean sLogEnabled;
 
     /**
      * 打印所有的信息
