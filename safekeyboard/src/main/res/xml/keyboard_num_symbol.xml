@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:mykeyboard="http://schemas.android.com/apk/res-auto"
+    mykeyboard:horizontalGap="2%p"
+    mykeyboard:keyHeight="@dimen/key_num_height"
+    mykeyboard:keyWidth="20.1%p"
+    mykeyboard:verticalGap="@dimen/key_vertical_gap">
+
+    <Row>
+        <Key
+            mykeyboard:codes="43"
+            mykeyboard:horizontalGap="1%p"
+            mykeyboard:keyLabel="+"
+            mykeyboard:keyWidth="14.6%p" />
+        <Key
+            mykeyboard:codes="49"
+            mykeyboard:keyLabel="1" />
+        <Key
+            mykeyboard:codes="50"
+            mykeyboard:keyLabel="2" />
+        <Key
+            mykeyboard:codes="51"
+            mykeyboard:keyLabel="3" />
+        <Key
+            mykeyboard:codes="64"
+            mykeyboard:keyLabel="@string/keyboard_key1"
+            mykeyboard:keyWidth="14.6%p" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="45"
+            mykeyboard:horizontalGap="1%p"
+            mykeyboard:keyLabel="-"
+            mykeyboard:keyWidth="14.6%p" />
+        <Key
+            mykeyboard:codes="52"
+            mykeyboard:keyLabel="4" />
+        <Key
+            mykeyboard:codes="53"
+            mykeyboard:keyLabel="5" />
+        <Key
+            mykeyboard:codes="54"
+            mykeyboard:keyLabel="6" />
+        <Key
+            mykeyboard:codes="95"
+            mykeyboard:keyLabel="_"
+            mykeyboard:keyWidth="14.6%p" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="47"
+            mykeyboard:horizontalGap="1%p"
+            mykeyboard:keyLabel="/"
+            mykeyboard:keyWidth="14.6%p" />
+        <Key
+            mykeyboard:codes="55"
+            mykeyboard:keyLabel="7" />
+        <Key
+            mykeyboard:codes="56"
+            mykeyboard:keyLabel="8" />
+        <Key
+            mykeyboard:codes="57"
+            mykeyboard:keyLabel="9" />
+        <Key
+            mykeyboard:codes="42"
+            mykeyboard:keyLabel="*"
+            mykeyboard:keyWidth="14.6%p" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="-2"
+            mykeyboard:horizontalGap="1%p"
+            mykeyboard:keyLabel="ABC"
+            mykeyboard:keyWidth="14.6%p" />
+        <Key
+            mykeyboard:codes="32"
+            mykeyboard:isRepeatable="false"
+            mykeyboard:keyLabel="space" />
+        <Key
+            mykeyboard:codes="48"
+            mykeyboard:keyLabel="0" />
+        <Key
+            mykeyboard:codes="46"
+            mykeyboard:keyLabel="." />
+        <Key
+            mykeyboard:codes="-5"
+            mykeyboard:isRepeatable="true"
+            mykeyboard:keyWidth="14.6%p" />
+    </Row>
+</Keyboard>

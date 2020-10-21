@@ -1,3 +1,4 @@
+include ':image'
 include ':router'
 include ':webview'
 include ':home'
@@ -5,4 +6,5 @@ include ':base'
 include ':common'
 include ':network'
 include ':app'
+include ':safekeyboard'
 rootProject.name = "ArchitectureDesign"

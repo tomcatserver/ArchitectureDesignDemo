@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import com.example.home.bean.ForceLoginVo;
 import com.example.home.bean.HomeChangeVO;
+import com.example.home.bean.Page2ListBean;
 import com.example.network.bean.Response;
 
 import java.util.List;
@@ -31,6 +32,9 @@ public interface IHomePage1Service {
 
     @GET("presale/getImLoginSwitchInfo")
     Observable<Response<ForceLoginVo>> getImLoginSwitchInfo();
+
+    @GET("mobile/homepage/getPager2Listtestsdss")
+    Observable<Response<Page2ListBean>> getPager2List();
 
     /**
      * 下载文件

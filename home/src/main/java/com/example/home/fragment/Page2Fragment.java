@@ -3,16 +3,24 @@ package com.example.home.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.base.MvvmFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.base.fragment.MvvmFragment;
 import com.example.base.viewmodel.ViewStatus;
 import com.example.home.R;
-import com.example.home.bean.HomeChangeVO;
+import com.example.home.adpater.Page2ItemAdapter;
+import com.example.home.bean.Page2ListBean;
+import com.example.home.bean.Pager2ItemBean;
 import com.example.home.databinding.FragmentPage2Binding;
-import com.example.home.viewmodel.HomeChangeViewModel;
+import com.example.home.viewmodel.Page2ViewModel;
 
-public class Page2Fragment extends MvvmFragment<FragmentPage2Binding, HomeChangeViewModel, HomeChangeVO> {
+import java.util.List;
 
-    HomeChangeViewModel mHomeChangeViewModel = new HomeChangeViewModel();
+public class Page2Fragment extends MvvmFragment<FragmentPage2Binding, Page2ViewModel, Page2ListBean> {
+
+    private Page2ViewModel mPage2ViewModel = new Page2ViewModel();
+    private Page2ItemAdapter mPage2ItemAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     protected int getLayoutId() {
@@ -25,25 +33,27 @@ public class Page2Fragment extends MvvmFragment<FragmentPage2Binding, HomeChange
     }
 
     @Override
-    protected void observeChangeData(HomeChangeVO data) {
+    protected void observeChangeData(Page2ListBean data) {
         if (data != null) {
-            mViewDataBinding.tvPager2.setText(data.getFloors().get(0).getName());
+            List<Pager2ItemBean> list = data.getList();
+            mPage2ItemAdapter.setData(list);
+            mViewDataBinding.list.setAdapter(mPage2ItemAdapter);
+            mPage2ItemAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
-    protected HomeChangeViewModel getViewModel() {
-        return mHomeChangeViewModel;
+    protected Page2ViewModel getViewModel() {
+        return mPage2ViewModel;
     }
+
 
     @Override
     protected void init(Bundle bundle) {
-        mViewDataBinding.tvPager2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mHomeChangeViewModel.requestData();
-            }
-        });
+        mPage2ItemAdapter = new Page2ItemAdapter(getContext());
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mViewDataBinding.list.setLayoutManager(mLinearLayoutManager);
+        mPage2ViewModel.requestData();
     }
 
 

@@ -107,7 +107,6 @@ public class Page1Fragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewModel.clearData();
     }
 
     private void uploadMethod() {

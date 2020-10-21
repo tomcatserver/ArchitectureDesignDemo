@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.base.model.IBaseModelListener;
 import com.example.base.model.MvvmBaseModel;
-import com.example.base.model.PagingResult;
 
 public class MvvmBaseViewModel<M extends MvvmBaseModel, D> extends ViewModel implements IBaseModelListener<D>, LifecycleObserver {
     protected M mModel;
@@ -45,7 +44,7 @@ public class MvvmBaseViewModel<M extends MvvmBaseModel, D> extends ViewModel imp
     }
 
     @Override
-    public void onLoadFinish(MvvmBaseModel model, D data, PagingResult... pageResult) {
+    public void onLoadFinish(MvvmBaseModel model, D data) {
         if (data == null) {
             mViewStatusLivedata.postValue(ViewStatus.EMPTY);
         } else {
@@ -56,7 +55,7 @@ public class MvvmBaseViewModel<M extends MvvmBaseModel, D> extends ViewModel imp
     }
 
     @Override
-    public void onLoadFail(MvvmBaseModel model, String prompt, PagingResult... pageResult) {
+    public void onLoadFail(MvvmBaseModel model, String prompt) {
         mViewStatusLivedata.postValue(ViewStatus.LOAD_FAILED);
     }
 }
