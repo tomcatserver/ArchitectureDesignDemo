@@ -2,7 +2,7 @@ package com.example.home.fragment;
 
 import android.os.Bundle;
 
-import com.example.base.MvvmFragment;
+import com.example.base.fragment.MvvmFragment;
 import com.example.base.viewmodel.ViewStatus;
 import com.example.home.R;
 import com.example.home.bean.HomeChangeVO;

@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.base.BaseFragment;
+import com.example.base.fragment.BaseFragment;
 import com.example.home.R;
 
 public class ShopFragment extends BaseFragment {

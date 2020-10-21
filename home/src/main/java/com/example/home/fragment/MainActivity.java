@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.example.base.BaseActivity;
+import com.example.base.activity.BaseActivity;
 import com.example.base.util.YWLogUtil;
 import com.example.home.R;
 import com.google.android.material.tabs.TabLayout;

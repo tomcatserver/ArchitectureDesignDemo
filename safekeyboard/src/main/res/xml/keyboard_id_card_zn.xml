@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:mykeyboard="http://schemas.android.com/apk/res-auto"
+    mykeyboard:horizontalGap="2.5%p"
+    mykeyboard:keyHeight="@dimen/key_num_height"
+    mykeyboard:keyWidth="30%p"
+    mykeyboard:verticalGap="@dimen/key_vertical_gap">
+
+    <Row>
+        <Key
+            mykeyboard:codes="49"
+            mykeyboard:keyLabel="1" />
+        <Key
+            mykeyboard:codes="50"
+            mykeyboard:keyLabel="2" />
+        <Key
+            mykeyboard:codes="51"
+            mykeyboard:keyLabel="3" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="52"
+            mykeyboard:keyLabel="4" />
+        <Key
+            mykeyboard:codes="53"
+            mykeyboard:keyLabel="5" />
+        <Key
+            mykeyboard:codes="54"
+            mykeyboard:keyLabel="6" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="55"
+            mykeyboard:keyLabel="7" />
+        <Key
+            mykeyboard:codes="56"
+            mykeyboard:keyLabel="8" />
+        <Key
+            mykeyboard:codes="57"
+            mykeyboard:keyLabel="9" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="88"
+            mykeyboard:keyLabel="X" />
+        <Key
+            mykeyboard:codes="48"
+            mykeyboard:keyLabel="0" />
+        <Key
+            mykeyboard:codes="-5"
+            mykeyboard:isRepeatable="true" />
+    </Row>
+</Keyboard>

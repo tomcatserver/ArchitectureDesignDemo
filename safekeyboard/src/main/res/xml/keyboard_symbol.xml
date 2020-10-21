@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:mykeyboard="http://schemas.android.com/apk/res-auto"
+    mykeyboard:horizontalGap="1%p"
+    mykeyboard:keyHeight="@dimen/key_num_height"
+    mykeyboard:keyWidth="10%p"
+    mykeyboard:verticalGap="@dimen/key_vertical_gap">
+    <Row>
+        <Key
+            mykeyboard:codes="33"
+            mykeyboard:keyEdgeFlags="left"
+            mykeyboard:keyLabel="!"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="64"
+            mykeyboard:keyLabel="@string/keyboard_key1"
+            mykeyboard:keyWidth="8.9%p" /><!--@-->
+        <Key
+            mykeyboard:codes="35"
+            mykeyboard:keyLabel="#"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="36"
+            mykeyboard:keyLabel="$"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="37"
+            mykeyboard:keyLabel="%"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="94"
+            mykeyboard:keyLabel="^"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="38"
+            mykeyboard:keyLabel="@string/keyboard_key2"
+            mykeyboard:keyWidth="8.9%p" /><!--&-->
+        <Key
+            mykeyboard:codes="42"
+            mykeyboard:keyLabel="*"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="40"
+            mykeyboard:keyLabel="("
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="41"
+            mykeyboard:keyEdgeFlags="right"
+            mykeyboard:keyLabel=")"
+            mykeyboard:keyWidth="8.9%p" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="39"
+            mykeyboard:keyEdgeFlags="left"
+            mykeyboard:keyLabel="'"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="34"
+            mykeyboard:keyLabel="@string/keyboard_key3"
+            mykeyboard:keyWidth="8.9%p" /> <!--"-->
+        <Key
+            mykeyboard:codes="61"
+            mykeyboard:keyLabel="="
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="95"
+            mykeyboard:keyLabel="_"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="58"
+            mykeyboard:keyLabel=":"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="59"
+            mykeyboard:keyLabel=";"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="63"
+            mykeyboard:keyLabel="\?"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="126"
+            mykeyboard:keyLabel="~"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="124"
+            mykeyboard:keyLabel="|"
+            mykeyboard:keyWidth="8.9%p" />
+        <Key
+            mykeyboard:codes="183"
+            mykeyboard:keyEdgeFlags="right"
+            mykeyboard:keyLabel="·"
+            mykeyboard:keyWidth="8.9%p" />
+    </Row>
+
+    <Row>
+        <Key
+            mykeyboard:codes="43"
+            mykeyboard:horizontalGap="3.5%p"
+            mykeyboard:keyLabel="+"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="45"
+            mykeyboard:keyLabel="-"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="92"
+            mykeyboard:keyLabel="\\"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="47"
+            mykeyboard:keyLabel="/"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="91"
+            mykeyboard:keyLabel="["
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="93"
+            mykeyboard:keyLabel="]"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="123"
+            mykeyboard:keyLabel="{"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="125"
+            mykeyboard:keyLabel="}"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="-5"
+            mykeyboard:horizontalGap="3.5%p"
+            mykeyboard:isRepeatable="true"
+            mykeyboard:keyWidth="13%p" />
+    </Row>
+
+    <Row mykeyboard:rowEdgeFlags="bottom">
+        <Key
+            mykeyboard:codes="-2"
+            mykeyboard:keyLabel="123"
+            mykeyboard:keyWidth="13%p" />
+        <Key
+            mykeyboard:codes="44"
+            mykeyboard:horizontalGap="1.5%p"
+            mykeyboard:keyLabel=","
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="46"
+            mykeyboard:keyLabel="."
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="60"
+            mykeyboard:keyLabel="@string/keyboard_key4"
+            mykeyboard:keyWidth="9%p" />
+        <!--<-->
+        <!-->-->
+        <Key
+            mykeyboard:codes="62"
+            mykeyboard:keyLabel="@string/keyboard_key5"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="8364"
+            mykeyboard:keyLabel="€"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="163"
+            mykeyboard:keyLabel="￡"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="165"
+            mykeyboard:keyLabel="¥"
+            mykeyboard:keyWidth="9%p" />
+        <Key
+            mykeyboard:codes="-2"
+            mykeyboard:horizontalGap="1.5%p"
+            mykeyboard:keyEdgeFlags="right"
+            mykeyboard:keyLabel="ABC"
+            mykeyboard:keyWidth="13%p" />
+    </Row>
+</Keyboard>

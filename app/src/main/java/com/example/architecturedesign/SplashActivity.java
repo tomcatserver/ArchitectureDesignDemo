@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import com.example.base.BaseActivity;
+import com.example.base.activity.BaseActivity;
 import com.example.common.views.PermissionUtils;
 import com.example.router.RouteServiceManager;
 

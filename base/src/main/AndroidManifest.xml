@@ -3,6 +3,6 @@
 
     /
     <application>
-        <activity android:name=".BaseActivity" />
+        <activity android:name=".activity.BaseActivity" />
     </application>
 </manifest>
