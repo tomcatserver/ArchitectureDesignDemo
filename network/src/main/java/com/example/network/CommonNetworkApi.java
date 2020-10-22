@@ -62,9 +62,10 @@ public class CommonNetworkApi extends NetworkApi {
     @Override
     public String getFormal() {
 //        return "http://service-o5ikp40z-1255468759.ap-shanghai.apigateway.myqcloud.com/";
-        return "https://gateway.fangkuaiyi.com";
+//        return "https://gateway.fangkuaiyi.com";
 //        return "https://timgsa.baidu.com/";
 //        return "https://eaifjfe.com/";
+        return "https://eaifjfe.com/";
     }
 
     public static void writeResponseBodyToDisk(ResponseBody responseBody, IDownFileToDisk downFileToDisk) {
@@ -87,6 +88,6 @@ public class CommonNetworkApi extends NetworkApi {
 
     @Override
     public String getTest() {
-        return "https://gateway.fangkuaiyi.com";
+        return "https://eaifjfe.com/";
     }
 }

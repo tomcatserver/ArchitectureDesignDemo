@@ -4,14 +4,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
-import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.webview.command.WebConstants;
 
 import static com.example.webview.command.WebConstants.JUMP_URL;
 
@@ -37,35 +33,18 @@ public class WebViewActivity extends AppCompatActivity {
             String url = intent.getStringExtra(JUMP_URL);
             mWebView.loadUrl(url);
         }
+        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWebView.dispatchEvent("zs");
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        clearWebView(mWebView);
+        WebViewUtil.clearWebView(mWebView);
     }
 
-    private void clearWebView(WebView m) {
-        if (m == null) {
-            return;
-        }
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            return;
-        }
-        m.stopLoading();
-        if (m.getHandler() != null) {
-            m.getHandler().removeCallbacksAndMessages(null);
-        }
-        m.removeAllViews();
-        ViewGroup mViewGroup = null;
-        if ((mViewGroup = ((ViewGroup) m.getParent())) != null) {
-            mViewGroup.removeView(m);
-        }
-        m.setWebChromeClient(null);
-        m.setWebViewClient(null);
-        m.setTag(null);
-        m.clearHistory();
-        m.destroy();
-        m = null;
-    }
 }

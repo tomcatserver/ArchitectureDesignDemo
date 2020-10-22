@@ -1,6 +1,5 @@
 package com.example.webview.webviewclient;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -10,11 +9,6 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.text.TextUtils;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.annotation.RequiresApi;
 
@@ -22,6 +16,12 @@ import androidx.annotation.RequiresApi;
 import com.example.base.util.YWLogUtil;
 import com.example.webview.R;
 import com.example.webview.WebViewCallBack;
+import com.tencent.smtt.export.external.interfaces.HttpAuthHandler;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.Map;
 
@@ -161,7 +161,7 @@ public class BaseWebviewClient extends WebViewClient {
     }
 
     @Override
-    public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
+    public void onReceivedSslError(WebView webView, final SslErrorHandler handler, com.tencent.smtt.export.external.interfaces.SslError error) {
         String channel = "";
         if (!TextUtils.isEmpty(channel) && channel.equals("play.google.com")) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mWebView.getContext());
@@ -201,5 +201,28 @@ public class BaseWebviewClient extends WebViewClient {
         } else {
             handler.proceed();
         }
+    }
+
+    /**
+     * HttpAuth密码记录及使用 当访问页面需要输入用户名和密码时会回调对应client接口.
+     *
+     * @param webView
+     * @param handler
+     * @param host
+     * @param realm
+     */
+    @Override
+    public void onReceivedHttpAuthRequest(WebView webView,
+                                          HttpAuthHandler handler,
+                                          String host,
+                                          String realm) {
+        super.onReceivedHttpAuthRequest(webView, handler, host, realm);
+        //首先判断是否可以重复使用对应用户名和密码如果可以则获取已保存的密码（获取成功后直接使用）
+        //如果不允许重复使用用户名和密码或者未保存用户名和密码则需要提示用户输入
+        //用户输入用户名和密码后可以将对应数据保存
+        //获取密码接口
+//        mWebView.getHttpAuthUsernamePassword(host, realm);
+//保存密码接口
+//        mWebView.setHttpAuthUsernamePassword( host,  realm, String username, String password)
     }
 }

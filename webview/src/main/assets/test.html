@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<head>
+    <script type="text/javascript">
+        function jsCallAndroid(platform, extInfo) {
+         console.log("---window EasyJSReady---")
+window.h5_android.jsCallAndroid(platform, extInfo);
+<!--window.h5_android.close();-->
+        }
+
+        function dispatchEvent(result) {
+            document.getElementById("messageArea").textContent = result
+        }
+
+    </script>
+</head>
+<body>
+<h1 align="center">Android与JS互调示例</h1>
+
+<h2>JS调用Android原生功能</h2>
+<input type="button"
+       style="width:100%; font-size: 25px"
+       value="测试"
+       onClick="jsCallAndroid('testMethod', '这是一个测试数据 js 调起 原生安卓')"/>
+
+<h2>Android调用JS</h2>
+<div style="font-size: 25px">测试结果：</div>
+<div style="width: 100%">
+    <textarea id="messageArea" rows="10" style="width: 100%; font-size: 25px"></textarea>
+</div>
+</body>
+</html>

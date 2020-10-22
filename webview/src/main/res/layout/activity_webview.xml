@@ -1,7 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.example.webview.BaseWebView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8"?><!--<com.example.webview.BaseWebView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/webview"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
 
-</com.example.webview.BaseWebView>
+<!--</com.example.webview.BaseWebView>-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.webview.BaseWebView
+        android:id="@+id/webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
+
+    <Button
+        android:text="原生调js"
+        android:layout_gravity="bottom"
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+         />
+
+</FrameLayout>
+
+
+

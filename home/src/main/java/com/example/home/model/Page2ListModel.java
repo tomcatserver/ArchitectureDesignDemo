@@ -42,7 +42,8 @@ public class Page2ListModel extends MvvmBaseModel<Page2ListBean> {
                     Pager2ItemBean pager2ItemBean = new Pager2ItemBean();
                     if (i % 2 == 0) {
 //                        pager2ItemBean.jumpUrl = "https://m.111.com.cn/yyw/app/jsBridge/index.html";
-                        pager2ItemBean.jumpUrl = "https://im.111.com.cn/yyw-im/pc/YYWIM.html?system=1_android&department=100009&productId=&provinceId=1&orderId=&param={}";
+//                        pager2ItemBean.jumpUrl = "https://im.111.com.cn/yyw-im/pc/YYWIM.html?system=1_android&department=100009&productId=&provinceId=1&orderId=&param={}";
+                        pager2ItemBean.jumpUrl = "file:///android_asset/test.html";
                         pager2ItemBean.content = "这是一个特殊特殊特殊特殊特殊特殊特殊的测试数据" + i;
                         pager2ItemBean.icon = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1601439875343&di=7a988450de0442b7cbe9211821508b71&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F35%2F34%2F79573bdede9d1a5.jpg";
                         pager2ItemBean.type = "1";
@@ -50,7 +51,8 @@ public class Page2ListModel extends MvvmBaseModel<Page2ListBean> {
                         pager2ItemBean.content = "这是一个普通普通的测试数据" + i;
                         pager2ItemBean.icon = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1601445283655&di=ab531715a816e14c7cccd54914b7ee33&imgtype=0&src=http%3A%2F%2Fpic1.16pic.com%2F00%2F37%2F98%2F16pic_3798816_b.jpg";
                         pager2ItemBean.type = "2";
-                        pager2ItemBean.jumpUrl = "https://m.111.com.cn/cmsPage/2019f3e83aee0307113044/index.html";
+                        pager2ItemBean.jumpUrl = "file:///android_asset/test.html";
+//                        pager2ItemBean.jumpUrl = "https://m.111.com.cn/cmsPage/2019f3e83aee0307113044/index.html";
                     }
                     list.add(pager2ItemBean);
                 }
