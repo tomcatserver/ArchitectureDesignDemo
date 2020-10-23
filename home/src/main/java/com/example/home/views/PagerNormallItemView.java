@@ -1,7 +1,6 @@
 package com.example.home.views;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -13,6 +12,7 @@ import com.example.base.util.YWLogUtil;
 import com.example.home.R;
 import com.example.home.bean.Pager2ItemBean;
 import com.example.home.databinding.ItemViewNormalPager2Binding;
+import com.example.webview.LocationStatus;
 import com.example.webview.WebViewActivity;
 
 public class PagerNormallItemView extends BaseItemView<ItemViewNormalPager2Binding, Pager2ItemBean> {
@@ -50,7 +50,7 @@ public class PagerNormallItemView extends BaseItemView<ItemViewNormalPager2Bindi
             @Override
             public void onClick(View view) {
                 YWLogUtil.e("tag", "jump -----webview");
-                WebViewActivity.startCommonWeb(getContext(), data.jumpUrl);
+                WebViewActivity.startCommonWeb(getContext(), data.jumpUrl, LocationStatus.Center);
             }
         });
     }

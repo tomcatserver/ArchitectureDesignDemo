@@ -1,6 +1,5 @@
 package com.example.webview;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Looper;
 import android.text.TextUtils;

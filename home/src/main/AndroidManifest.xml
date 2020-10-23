@@ -2,6 +2,8 @@
     package="com.example.home">
 
     <application>
-        <activity android:name=".fragment.MainActivity" />
+        <activity
+            android:name=".fragment.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 </manifest>

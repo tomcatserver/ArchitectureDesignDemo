@@ -2,8 +2,13 @@ package com.example.webview.webviewclient;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.example.base.util.YWLogUtil;
+import com.example.webview.WebViewCallBack;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
@@ -13,6 +18,19 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 public class BaseWebChomeClient extends WebChromeClient {
+    private static final int MAX_LENGTH = 10;
+    private static final int PROGRESS_LENGTH = 100;
+    private static final String TAG = BaseWebChomeClient.class.getSimpleName();
+    private ProgressBar mProgressBar;
+    private WebViewCallBack mCallBack;
+
+    public BaseWebChomeClient(WebViewCallBack callBack) {
+        mCallBack = callBack;
+        if (mCallBack != null) {
+            mProgressBar = mCallBack.getProgressBar();
+        }
+    }
+
     @Override
     public boolean onJsAlert(WebView webView, String s, String s1, JsResult jsResult) {
         //可以弹框或进行其它处理，但一定要回调result.confirm或者cancel
@@ -74,7 +92,6 @@ public class BaseWebChomeClient extends WebChromeClient {
      * 设置client回调（单选多选均会回调该接口）
      *
      * @param webView
-     * @param valueCallback
      * @param fileChooserParams
      * @return
      */
@@ -84,6 +101,9 @@ public class BaseWebChomeClient extends WebChromeClient {
                                      FileChooserParams fileChooserParams) {
         //保存对应的valuecallback供选择后使用
         //通过startActivityForResult启动文件选择窗口或自定义文件选择
+        if (mCallBack != null) {
+            mCallBack.onShowFileChooser(filePathCallback, fileChooserParams);
+        }
         return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
     }
 
@@ -116,4 +136,35 @@ public class BaseWebChomeClient extends WebChromeClient {
         //这里对favicon进行操作
         super.onReceivedIcon(webView, bitmap);
     }
+
+    /**
+     * 页面加载进度
+     *
+     * @param webView
+     * @param newProgress 进度值
+     */
+    @Override
+    public void onProgressChanged(WebView webView, int newProgress) {
+        YWLogUtil.e(TAG, "newProgress---------=" + newProgress);
+        if (newProgress >= PROGRESS_LENGTH * 0.8) {
+            //可以进行js注入了。
+            if (mCallBack != null) {
+                mCallBack.loadJs();
+            }
+        }
+        if (mProgressBar != null) {
+            if (newProgress != PROGRESS_LENGTH) {
+                mProgressBar.setProgress(newProgress);
+                if (mProgressBar.getVisibility() != View.VISIBLE) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                }
+            } else {
+                if (mProgressBar.getVisibility() == View.VISIBLE) {
+                    mProgressBar.setVisibility(View.GONE);
+                }
+            }
+
+        }
+    }
+
 }

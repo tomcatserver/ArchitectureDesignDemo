@@ -8,29 +8,26 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.example.base.util.AppExecutors;
 import com.example.base.util.GsonUtils;
 import com.example.base.util.YWLogUtil;
+import com.example.webview.webviewclient.BaseWebChomeClient;
 import com.example.webview.webviewclient.BaseWebviewClient;
+import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebChromeClientExtension;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension;
 import com.tencent.smtt.export.external.interfaces.IX5WebViewBase;
+import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTouch {
     public static final String CONTENT_SCHEME = "file:///android_asset/";
     private static final String ADD_JS = "h5_android";
     private static final String TAG = BaseWebView.class.getSimpleName();
-    private Context mContext;
     private WebViewCallBack mWebViewCallBack;
     private Map<String, String> mHeaders;
     private boolean mTouchByUser;
@@ -53,65 +50,16 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
 
     private void init(Context context) {
         WebViewSetting.getInstance().toSetting(this);
-//        CommandDispatcher.getInstance().initAidlConnect(getContext());
-        //保存网页
-//        saveWebArchive(String filename);
-//        saveWebArchive(String basename, boolean autoname, ValueCallback<String> callback)
-
-//        pageDown(boolean bottom); //向下滚动
-//        pageUp(boolean top); //向上滚动
-//        getView().scrollTo(x,y); //滚动：
-        /**
-         * 设置滚动条样式
-         */
-//竖直快速滑块，设置null可去除
-//        getX5WebViewExtension().setVerticalTrackDrawable(Drawable drawable)
-//判断水平滚动条是否启动
-//        getX5WebViewExtension().isHorizontalScrollBarEnabled()
-//启用或禁用水平滚动条
-//        getX5WebViewExtension().setHorizontalScrollBarEnabled( boolean enabled)
-//判断竖直滚动条是否启动
-//        getX5WebViewExtension().isVerticalScrollBarEnabled()
-//启用或禁用竖直滚动条
-//        getX5WebViewExtension().setVerticalScrollBarEnabled( boolean enabled)
-//设置滚动条渐隐消失的时间段
-//        getX5WebViewExtension().setScrollBarFadeDuration( int duration)
-//设置滚动条多久开始渐隐消失
-//        getX5WebViewExtension().setScrollBarDefaultDelayBeforeFade( int delay)
+        JSCallAndroid jsObject = new JSCallAndroid();
 //        js注入对象
-        addJavascriptInterface(this, ADD_JS);
-    }
-
-    //js调用安卓代码
-    @JavascriptInterface
-    public void jsCallAndroid(final String methodName, final String param) {
-        AppExecutors.getInstance().mainThread().execute(new Runnable() {
-            @Override
-            public void run() {
-                YWLogUtil.e(TAG, "methodName=" + methodName + ",param=" + param);
-                dispatchEvent(methodName);
-            }
-        });
-    }
-
-    @JavascriptInterface
-    public void close() {
-        YWLogUtil.e(TAG, "close---------=");
+        addJavascriptInterface(jsObject, ADD_JS);
     }
 
     //安卓调用js代码 js执行
-    public void loadJS(String methodName, Object param) {
-        /* webView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String s) {
-                //将button显示的文字改成JS返回的字符串
-                buttonLeft.setText(s);
-            }
-        });*/
-//        String js = "javascript:" + methodName + "(" + GsonUtils.toJson(param) + ")";
+    public void loadJS(String methodName, Object param, ValueCallback<String> valueCallback) {
         String js = String.format("javascript:" + methodName + "('%s')", GsonUtils.toJson(param));
         YWLogUtil.e(TAG, "loadJS----=" + js);
-        evaluateJavascript(js, null);
+        evaluateJavascript(js, valueCallback);
     }
 
     public void removeJavascriptInterface() {
@@ -126,7 +74,9 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     public void registerdWebViewCallBack(WebViewCallBack webViewCallBack) {
         mWebViewCallBack = webViewCallBack;
         setWebViewClient(new BaseWebviewClient(this, webViewCallBack, mHeaders, this));
+        setWebChromeClient(new BaseWebChomeClient(webViewCallBack));
     }
+
 
     public void setHeaders(Map<String, String> mHeaders) {
         this.mHeaders = mHeaders;
@@ -150,16 +100,6 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
             return;
         }
         resetAllState();
-    }
-
-    public void dispatchEvent(String name) {
-        Map<String, String> param = new HashMap<>(1);
-        param.put("name", name);
-        param.put("sex", "nv");
-        param.put("age", String.valueOf(60));
-        param.put("time", String.valueOf(System.currentTimeMillis()));
-        param.put("content", "android call js");
-        loadJS("dispatchEvent", param);
     }
 
 
@@ -219,7 +159,10 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
                                 float scaleX,
                                 float scaleY,
                                 Runnable callback) {
-        getX5WebViewExtension().snapshotVisible(bitmap, drawCursor, drawScrollbars, drawTitleBar, drawWithBuffer, scaleX, scaleY, callback);
+        IX5WebViewExtension x5WebViewExtension = getX5WebViewExtension();
+        if (x5WebViewExtension != null) {
+            x5WebViewExtension.snapshotVisible(bitmap, drawCursor, drawScrollbars, drawTitleBar, drawWithBuffer, scaleX, scaleY, callback);
+        }
     }
 
     /**
@@ -233,7 +176,10 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     public void snapshotWholePage(Canvas canvas,
                                   boolean drawScrollbars,
                                   boolean drawTitleBar) {
-        getX5WebViewExtension().snapshotWholePage(canvas, drawScrollbars, drawTitleBar);
+        IX5WebViewExtension x5WebViewExtension = getX5WebViewExtension();
+        if (x5WebViewExtension != null) {
+            x5WebViewExtension.snapshotWholePage(canvas, drawScrollbars, drawTitleBar);
+        }
     }
 
     public void setWebChromeClientExtension() {
@@ -265,12 +211,12 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
              * isReplace：是否是替换操作
              */
             @Override
-            public boolean onSavePassword(ValueCallback<String> callback, String schemePlusHost, String username, String password, String nameElement, String passwordElement, boolean isReplace) {
+            public boolean onSavePassword(android.webkit.ValueCallback<String> valueCallback, String schemePlusHost, String username, String password, String nameElement, String passwordElement, boolean isReplace) {
                 //这里可以弹窗提示用户
                 //这里调用将会保存用户名和密码，如果只保存用户名可以将密码置为null，如果两者均不存在则不需要调用该接口
                 getX5WebViewExtension().sendRememberMsg(schemePlusHost, username, password, nameElement, passwordElement);
                 //处理完后需要回调该接口，执行了保存操作参数为true，否则为false
-                callback.onReceiveValue("true");
+                valueCallback.onReceiveValue("true");
                 //这里要返回true，否则内核会提示用户保存密码
                 return true;
 //                return super.onSavePassword(callback, schemePlusHost, username, password, nameElement, passwordElement, isReplace);
@@ -281,6 +227,24 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     public void setWebViewClientExtension() {
         //设置自动弹窗被拦截时提醒（回调接口）
 //        getSettingsExtension().setJavaScriptOpenWindowsBlockedNotifyEnabled(true);
+
+        /**
+         * 设置滚动条样式
+         */
+//竖直快速滑块，设置null可去除
+//        getX5WebViewExtension().setVerticalTrackDrawable(Drawable drawable)
+//判断水平滚动条是否启动
+//        getX5WebViewExtension().isHorizontalScrollBarEnabled()
+//启用或禁用水平滚动条
+//        getX5WebViewExtension().setHorizontalScrollBarEnabled( boolean enabled)
+//判断竖直滚动条是否启动
+//        getX5WebViewExtension().isVerticalScrollBarEnabled()
+//启用或禁用竖直滚动条
+//        getX5WebViewExtension().setVerticalScrollBarEnabled( boolean enabled)
+//设置滚动条渐隐消失的时间段
+//        getX5WebViewExtension().setScrollBarFadeDuration( int duration)
+//设置滚动条多久开始渐隐消失
+//        getX5WebViewExtension().setScrollBarDefaultDelayBeforeFade( int delay)
         //回调的接口需要如下设置：
         getX5WebViewExtension().setWebViewClientExtension(new ProxyWebViewClientExtension() {
             /**
@@ -291,12 +255,12 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
              * 如果callback回调false，页面下次弹出窗口被拦截仍会通知宿主，但此时hadAllowShow的值为true
              * @param host 页面域名
              * @param blockedUrlList 被阻止打开的页面url列表
-             * @param callback true:打开拦截页面且后续不再拦截，false:打开宿主页面后续继续拦截,如果已经做过该操作,则后续回调接口中hadAllowShow为true
+             * @param valueCallback true:打开拦截页面且后续不再拦截，false:打开宿主页面后续继续拦截,如果已经做过该操作,则后续回调接口中hadAllowShow为true
              * @param hadAllowShow 是否允许展示过该host的弹出窗口，当曾经设置过callback<false>时该值为true,否则为false
              * @return 宿主处理了该接口返回true，否则返回false
              */
             @Override
-            public boolean notifyJavaScriptOpenWindowsBlocked(String host, String[] blockedUrlList, ValueCallback<Boolean> callback, boolean hadAllowShow) {
+            public boolean notifyJavaScriptOpenWindowsBlocked(String host, String[] blockedUrlList, android.webkit.ValueCallback<Boolean> valueCallback, boolean hadAllowShow) {
                 //在此可以弹框提示用户
                 //只允许当前一次调用callback.onReceiveValue(false)
                 //如果后续都允许调用callback.onReceiveValue(true)
@@ -315,7 +279,6 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     /**
      * 单步后退
      */
-    @SuppressWarnings("checkstyle:Indentation")
     public void goBacks() {
         if (canGoBack()) {
             goBack();
@@ -323,7 +286,7 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     }
 
     /**
-     * 单步后退
+     * 单步前进
      */
     public void goForwards() {
         if (canGoForward()) {
@@ -375,6 +338,42 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
 
             }
         });
+    }
+
+    /**
+     * 页面滚动
+     *
+     * @param state 页面滚动方向的状态 DOWN表示向下滚动，UP表示向上滚动
+     */
+    public void pageScroll(PageScrollState state) {
+        if (PageScrollState.DOWN == state) {
+            pageDown(true);
+        } else if (PageScrollState.UP == state) {
+            pageUp(true);
+        }
+    }
+
+    /**
+     * 保存网页
+     *
+     * @param filename
+     */
+    public void saveWebArchives(String filename) {
+        saveWebArchive(filename);
+    }
+
+    public void saveWebArchives(String basename, boolean autoname, ValueCallback<String> callback) {
+        saveWebArchive(basename, autoname, callback);
+    }
+
+    /**
+     * 滚动：
+     *
+     * @param x
+     * @param y
+     */
+    public void scrollTos(int x, int y) {
+        getView().scrollTo(x, y);
     }
 
 }
