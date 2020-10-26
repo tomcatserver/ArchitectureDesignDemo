@@ -11,7 +11,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBar();
+//        setStatusBar();
         initData(savedInstanceState);
         if (layoutRes() != 0) {
             setContentView(layoutRes());

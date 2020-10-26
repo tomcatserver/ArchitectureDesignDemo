@@ -3,14 +3,12 @@
     android:id="@+id/rl_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@null">
 
-    <com.example.webview.BaseWebView
+    <com.example.webview.view.CommonWebView
         android:id="@+id/webview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
     <ProgressBar

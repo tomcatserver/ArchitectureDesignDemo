@@ -1,4 +1,4 @@
-package com.example.webview;
+package com.example.webview.setting;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,18 +7,18 @@ import android.net.NetworkInfo;
 
 import com.example.base.BuildConfig;
 import com.example.base.util.YWLogUtil;
-import com.tencent.smtt.export.external.extension.interfaces.IX5WebSettingsExtension;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 
-
+/**
+ * webview相关设置功能开关 在这里统一配置。
+ */
 public class WebViewSetting {
     private static final int TEXT_ROOM = 100;
     private static final int DEFAULT_FONT_SIZE = 16;
     private static final int MINI_MUM_FONT_SIZE = 10;
     private static final String TAG = WebViewSetting.class.getSimpleName();
     private static final int APP_CACHE = 1024 * 1024 * 100;
-    private WebViewSetting mWebViewSetting;
     private WebSettings mWebSettings;
 
     public static WebViewSetting getInstance() {

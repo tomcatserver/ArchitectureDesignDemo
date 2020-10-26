@@ -1,21 +1,18 @@
 package com.example.webview.webviewclient;
 
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
+import android.os.Message;
 import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
 
 
 import com.example.base.util.YWLogUtil;
-import com.example.webview.R;
-import com.example.webview.WebViewCallBack;
+import com.example.webview.callback.IWebViewCallBack;
 import com.tencent.smtt.export.external.interfaces.HttpAuthHandler;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
@@ -25,20 +22,19 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.Map;
 
-import static com.example.webview.BaseWebView.CONTENT_SCHEME;
+import static com.example.webview.view.CommonWebView.CONTENT_SCHEME;
 
 
-public class BaseWebviewClient extends WebViewClient {
+public class BaseWebViewClient extends WebViewClient {
 
     private static final String TAG = "XXWebviewCallBack";
     public static final String SCHEME_SMS = "sms:";
-    private WebViewCallBack mWebViewCallBack;
+    private IWebViewCallBack mWebViewCallBack;
     private WebView mWebView;
     boolean mReady;
     private Map<String, String> mHeaders;
     private IWebviewTouch mWebviewTouch;
-
-    public BaseWebviewClient(WebView webView, WebViewCallBack webViewCallBack, Map<String, String> headers, IWebviewTouch touch) {
+    public BaseWebViewClient(WebView webView, IWebViewCallBack webViewCallBack, Map<String, String> headers, IWebviewTouch touch) {
         this.mWebViewCallBack = webViewCallBack;
         this.mWebView = webView;
         this.mHeaders = headers;
@@ -114,6 +110,9 @@ public class BaseWebviewClient extends WebViewClient {
             }
             return true;
         }
+        if (mWebViewCallBack != null) {
+            return mWebViewCallBack.shouldOverrideUrlLoading(url);
+        }
         return false;
     }
 
@@ -154,53 +153,15 @@ public class BaseWebviewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         super.onReceivedError(view, errorCode, description, failingUrl);
-        YWLogUtil.e(TAG, "webview error" + errorCode + " + " + description);
+        YWLogUtil.e(TAG, "webview" + " error" + errorCode + " + " + description);
         if (mWebViewCallBack != null) {
-            mWebViewCallBack.onError();
+            mWebViewCallBack.onReceivedError(this, view, errorCode, description, failingUrl);
         }
     }
 
     @Override
     public void onReceivedSslError(WebView webView, final SslErrorHandler handler, com.tencent.smtt.export.external.interfaces.SslError error) {
-        String channel = "";
-        if (!TextUtils.isEmpty(channel) && channel.equals("play.google.com")) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mWebView.getContext());
-            String message = mWebView.getContext().getString(R.string.ssl_error);
-            switch (error.getPrimaryError()) {
-                case SslError.SSL_UNTRUSTED:
-                    message = mWebView.getContext().getString(R.string.ssl_error_not_trust);
-                    break;
-                case SslError.SSL_EXPIRED:
-                    message = mWebView.getContext().getString(R.string.ssl_error_expired);
-                    break;
-                case SslError.SSL_IDMISMATCH:
-                    message = mWebView.getContext().getString(R.string.ssl_error_mismatch);
-                    break;
-                case SslError.SSL_NOTYETVALID:
-                    message = mWebView.getContext().getString(R.string.ssl_error_not_valid);
-                    break;
-            }
-            message += mWebView.getContext().getString(R.string.ssl_error_continue_open);
-
-            builder.setTitle(R.string.ssl_error);
-            builder.setMessage(message);
-            builder.setPositiveButton(R.string.continue_open, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    handler.proceed();
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    handler.cancel();
-                }
-            });
-            final AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
-            handler.proceed();
-        }
+        handler.proceed();
     }
 
     /**
@@ -224,5 +185,11 @@ public class BaseWebviewClient extends WebViewClient {
 //        mWebView.getHttpAuthUsernamePassword(host, realm);
 //保存密码接口
 //        mWebView.setHttpAuthUsernamePassword( host,  realm, String username, String password)
+    }
+
+    @Override
+    public void onFormResubmission(WebView view, Message dontResend, Message resend) {
+        //解决有表单form提交的时候，webview在调用goBack()方法时，不起作用
+        resend.sendToTarget();
     }
 }

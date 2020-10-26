@@ -2,13 +2,11 @@ package com.example.webview.webviewclient;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.base.util.YWLogUtil;
-import com.example.webview.WebViewCallBack;
+import com.example.webview.callback.IWebViewCallBack;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
@@ -22,9 +20,9 @@ public class BaseWebChomeClient extends WebChromeClient {
     private static final int PROGRESS_LENGTH = 100;
     private static final String TAG = BaseWebChomeClient.class.getSimpleName();
     private ProgressBar mProgressBar;
-    private WebViewCallBack mCallBack;
+    private IWebViewCallBack mCallBack;
 
-    public BaseWebChomeClient(WebViewCallBack callBack) {
+    public BaseWebChomeClient(IWebViewCallBack callBack) {
         mCallBack = callBack;
         if (mCallBack != null) {
             mProgressBar = mCallBack.getProgressBar();
@@ -147,9 +145,10 @@ public class BaseWebChomeClient extends WebChromeClient {
     public void onProgressChanged(WebView webView, int newProgress) {
         YWLogUtil.e(TAG, "newProgress---------=" + newProgress);
         if (newProgress >= PROGRESS_LENGTH * 0.8) {
+            YWLogUtil.e("tag", "可以进行js注入了。－－－－－mCallBack=" + mCallBack);
             //可以进行js注入了。
             if (mCallBack != null) {
-                mCallBack.loadJs();
+                mCallBack.startLoadJs(webView);
             }
         }
         if (mProgressBar != null) {

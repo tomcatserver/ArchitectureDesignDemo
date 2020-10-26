@@ -12,8 +12,8 @@ import com.example.base.util.YWLogUtil;
 import com.example.home.R;
 import com.example.home.bean.Pager2ItemBean;
 import com.example.home.databinding.ItemViewNormalPager2Binding;
-import com.example.webview.LocationStatus;
-import com.example.webview.WebViewActivity;
+import com.example.webview.state.LocationState;
+import com.example.webview.activity.WebViewActivity;
 
 public class PagerNormallItemView extends BaseItemView<ItemViewNormalPager2Binding, Pager2ItemBean> {
     public PagerNormallItemView(Context context) {
@@ -50,7 +50,7 @@ public class PagerNormallItemView extends BaseItemView<ItemViewNormalPager2Bindi
             @Override
             public void onClick(View view) {
                 YWLogUtil.e("tag", "jump -----webview");
-                WebViewActivity.startCommonWeb(getContext(), data.jumpUrl, LocationStatus.Center);
+                WebViewActivity.startCommonWeb(getContext(), data.jumpUrl, LocationState.Bottom);
             }
         });
     }

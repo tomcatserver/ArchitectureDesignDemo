@@ -14,7 +14,7 @@ import com.example.home.R;
 
 import com.example.home.bean.Pager2ItemBean;
 import com.example.home.databinding.ItemViewSpecialPager2Binding;
-import com.example.webview.WebViewActivity;
+import com.example.webview.activity.WebViewActivity;
 
 public class PagerSpecialItemView extends BaseItemView<ItemViewSpecialPager2Binding, Pager2ItemBean> {
     public PagerSpecialItemView(Context context) {

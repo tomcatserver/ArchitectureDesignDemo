@@ -1,4 +1,4 @@
-package com.example.webview;
+package com.example.webview.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,10 +11,15 @@ import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.base.util.GsonUtils;
 import com.example.base.util.YWLogUtil;
+import com.example.webview.state.PageScrollState;
+import com.example.webview.callback.IWebViewCallBack;
+import com.example.webview.setting.WebViewSetting;
+import com.example.webview.jsbridge.JSCallAndroidBridge;
 import com.example.webview.webviewclient.BaseWebChomeClient;
-import com.example.webview.webviewclient.BaseWebviewClient;
+import com.example.webview.webviewclient.BaseWebViewClient;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebChromeClientExtension;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension;
@@ -24,33 +29,36 @@ import com.tencent.smtt.sdk.WebView;
 
 import java.util.Map;
 
-public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTouch {
+/**
+ * 通用WebView控件
+ */
+public class CommonWebView extends WebView implements BaseWebViewClient.IWebviewTouch {
     public static final String CONTENT_SCHEME = "file:///android_asset/";
     private static final String ADD_JS = "h5_android";
-    private static final String TAG = BaseWebView.class.getSimpleName();
-    private WebViewCallBack mWebViewCallBack;
+    private static final String TAG = CommonWebView.class.getSimpleName();
+    private IWebViewCallBack mWebViewCallBack;
     private Map<String, String> mHeaders;
     private boolean mTouchByUser;
 
 
-    public BaseWebView(@NonNull Context context) {
+    public CommonWebView(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public BaseWebView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CommonWebView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public BaseWebView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CommonWebView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
         WebViewSetting.getInstance().toSetting(this);
-        JSCallAndroid jsObject = new JSCallAndroid();
+        JSCallAndroidBridge jsObject = new JSCallAndroidBridge(this);
 //        js注入对象
         addJavascriptInterface(jsObject, ADD_JS);
     }
@@ -67,13 +75,13 @@ public class BaseWebView extends WebView implements BaseWebviewClient.IWebviewTo
     }
 
 
-    public WebViewCallBack getWebViewCallBack() {
+    public IWebViewCallBack getWebViewCallBack() {
         return mWebViewCallBack;
     }
 
-    public void registerdWebViewCallBack(WebViewCallBack webViewCallBack) {
+    public void registerdWebViewCallBack(IWebViewCallBack webViewCallBack) {
         mWebViewCallBack = webViewCallBack;
-        setWebViewClient(new BaseWebviewClient(this, webViewCallBack, mHeaders, this));
+        setWebViewClient(new BaseWebViewClient(this, webViewCallBack, mHeaders, this));
         setWebChromeClient(new BaseWebChomeClient(webViewCallBack));
     }
 

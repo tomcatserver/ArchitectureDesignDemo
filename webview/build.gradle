@@ -34,5 +34,5 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
     api project(":base")
     api 'com.tencent.tbs.tbssdk:sdk:43939'
-    api 'com.tencent.bugly:crashreport_upgrade:1.4.5'
+//    api 'com.tencent.bugly:crashreport_upgrade:1.4.5'
 }

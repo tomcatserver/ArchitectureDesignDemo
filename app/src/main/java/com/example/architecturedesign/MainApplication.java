@@ -6,7 +6,7 @@ import com.example.base.util.ContextUtils;
 import com.example.base.util.YWLogUtil;
 import com.example.network.NetworkApi;
 import com.example.router.Router;
-import com.example.webview.WebViewUtil;
+import com.example.webview.util.WebViewUtil;
 
 public class MainApplication extends Application {
 
